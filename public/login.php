@@ -7,7 +7,7 @@ if (isPost() && cfsr()){
     $usuari =  isRequired('usuarioLogin', $errors);
     $contrasenya = isRequired('contraseñaLogin',$errors);
     if (!count($errors)){
-        $paginaView = 'mostrarLogin';
+        $paginaView = 'resultadoLogin';
         loadView('index',compact('menu','usuari','contrasenya','paginaView'));
     }else{
         loadView('index',compact('menu', 'errors','paginaView'));

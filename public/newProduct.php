@@ -14,7 +14,7 @@ if (isPost() && cfsr()){
     $categoria = $_POST['categories'];
     $fitxer = saveFile('foto','image/png','img',$errors);
     if (!count($errors)){
-        $paginaView = 'mostrarNewProduct';
+        $paginaView = 'formulario';
         loadView('index',compact('menu','nom','preuOriginal', 'preuDescompte', 'estrelles','fitxer','categoria','paginaView'));
     }else{
         loadView('index',compact('menu','errors', 'paginaView'));
