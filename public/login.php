@@ -4,8 +4,16 @@ require_once($route_config.'menu.php');
 $errors = [];
 $paginaView = 'login';
 if (isPost() && cfsr()){
-    $usuari =  isRequired('usuarioLogin', $errors);
-    $contrasenya = isRequired('contraseñaLogin',$errors);
+    try {
+        $usuari =  isRequired('usuarioLogin', $errors);
+    }catch (\BatoiPOP\Exceptions\RequiredField $e){
+        $errors[$e->getField()] = $e->getMessage();
+    }
+    try {
+        $contrasenya = isRequired('contraseñaLogin',$errors);
+    }catch (\BatoiPOP\Exceptions\RequiredField $e){
+        $errors[$e->getField()] = $e->getMessage();
+    }
     if (!count($errors)){
         $paginaView = 'resultadoLogin';
         loadView('index',compact('menu','usuari','contrasenya','paginaView'));

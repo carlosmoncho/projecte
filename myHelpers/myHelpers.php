@@ -23,27 +23,26 @@ function cfsr(){
 
 function isRequired($nomCamp, &$errors){
     if (empty($_POST[$nomCamp]) || $nomCamp === ""){
-        $errors[] = "El $nomCamp es necessari";
-        return null;
+        throw new \BatoiPOP\Exceptions\RequiredField($nomCamp);
     }else{
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }
 }
 
 function isNumeric($nomCamp, &$errors){
-    if (is_numeric($_POST[$nomCamp])){
-        return trim(htmlspecialchars($_POST[$nomCamp]));
-    }else{
-        $errors[] = "El $nomCamp no es numeric";
-        return null;
+    if ($_POST[$nomCamp]){
+        if (is_numeric($_POST[$nomCamp])){
+            return trim(htmlspecialchars($_POST[$nomCamp]));
+        }else{
+            throw new \BatoiPOP\Exceptions\NoNumericField($nomCamp);
+        }
     }
 }
 function filtroStars($nomCamp, &$errors){
     if ($_POST[$nomCamp] <= 5 && $_POST[$nomCamp] >= 1){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
-        $errors[] = "El camp $nomCamp te que tindrer un valor entre 1-5";
-        return null;
+        throw new \BatoiPOP\Exceptions\NoFitField("El camp $nomCamp te que tindrer un valor entre 1-5");
     }
 }
 
@@ -52,34 +51,29 @@ function saveFile($nomcamp,$type,$directori,&$errors){
         $nomFitxer = $_FILES[$nomcamp]['name'];
         if (move_uploaded_file($_FILES['foto']['tmp_name'],"$directori/".$nomFitxer )){
             return $nomFitxer;
-        }else{
-            $errors[] = 'No es pot muntar el fitxer';
         }
     }else{
-        $errors[] = 'El fitxer no es '.$type;
+        throw new \BatoiPOP\Exceptions\isNotAnImageFile($nomcamp);
     }
 }
 function nameLenght($nomCamp, &$errors){
     if (strlen($_POST[$nomCamp]) >= 10 && strlen($_POST[$nomCamp]) <= 30){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
-        $errors[] = "El $nomCamp te que ser entre 10 i 30";
-        return null;
+        throw new \BatoiPOP\Exceptions\NoFitField("El $nomCamp te que ser entre 10 i 30");
     }
 }
 function contrasenyaSegura($nomCamp, &$errors){
     if (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/',$_POST[$nomCamp])){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
-        $errors[] = "La contrasenya te que ser entre minim de 8 lletres, contindrer i minuscules majuscules, un numero y algun caracter especial com un .";
-        return null;
+        throw new \BatoiPOP\Exceptions\NoFitField("La contrasenya te que ser entre minim de 8 lletres, contindrer i minuscules majuscules, un numero y algun caracter especial com un .");
     }
 }
 
 function compararContrseñas($nomCamp1, $nomCamp2, &$errors){
     if ($_POST[$nomCamp1] !== $_POST[$nomCamp2]){
-        $errors[] = "Les contrasenyes tenen que ser iguals";
-        return null;
+        throw new \BatoiPOP\Exceptions\passwordIsNotSame('');
     }
 }
 

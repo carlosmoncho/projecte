@@ -25,9 +25,9 @@
         <div class="form-group">
             <label for="innputCategories">Categories: </label>
             <select id="innputCategories" class="form-control" name="categories">
-                <option value="Computer">Computer</option>
-                <option value="Tablet">Tablet</option>
-                <option value="Mobile">Mobile</option>
+                <?php foreach ($categoriesObjects as $categoria){?>
+                    <option value="<?=$categoria->getId()?>"><?=$categoria->getName()?></option>
+                <?php }?>
             </select>
         </div>
         <br>
