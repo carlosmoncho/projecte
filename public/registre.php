@@ -5,30 +5,30 @@ $errors = [];
 $paginaView = 'registre';
 if (isPost() && cfsr()){
     try {
-        $usuari =  isRequired('nombreUsuario', $errors);
+        $usuari =  isRequired('nombreUsuario');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $email = isRequired('email', $errors);
+        $email = isRequired('email');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $contrasenya1 = isRequired('contraseña1',$errors);
-        $contrasenya1 = contrasenyaSegura('contraseña1',$errors);
+        $contrasenya1 = isRequired('contraseña1');
+        $contrasenya1 = contrasenyaSegura('contraseña1');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }catch (\BatoiPOP\Exceptions\NoFitField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $contrasenya2 = isRequired('contraseña2',$errors);
+        $contrasenya2 = isRequired('contraseña2');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        compararContrseñas('contraseña1','contraseña2',$errors);
+        compararContrseñas('contraseña1','contraseña2');
     }catch (\BatoiPOP\Exceptions\passwordIsNotSame $e){
         $errors[$e->getField()] = $e->getMessage();
     }

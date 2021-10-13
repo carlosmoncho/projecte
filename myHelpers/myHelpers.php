@@ -21,7 +21,7 @@ function cfsr(){
     else return true;
 }
 
-function isRequired($nomCamp, &$errors){
+function isRequired($nomCamp){
     if (empty($_POST[$nomCamp]) || $nomCamp === ""){
         throw new \BatoiPOP\Exceptions\RequiredField($nomCamp);
     }else{
@@ -29,7 +29,7 @@ function isRequired($nomCamp, &$errors){
     }
 }
 
-function isNumeric($nomCamp, &$errors){
+function isNumeric($nomCamp){
     if ($_POST[$nomCamp]){
         if (is_numeric($_POST[$nomCamp])){
             return trim(htmlspecialchars($_POST[$nomCamp]));
@@ -38,7 +38,7 @@ function isNumeric($nomCamp, &$errors){
         }
     }
 }
-function filtroStars($nomCamp, &$errors){
+function filtroStars($nomCamp){
     if ($_POST[$nomCamp] <= 5 && $_POST[$nomCamp] >= 1){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
@@ -46,7 +46,7 @@ function filtroStars($nomCamp, &$errors){
     }
 }
 
-function saveFile($nomcamp,$type,$directori,&$errors){
+function saveFile($nomcamp,$type,$directori){
     if ($_FILES[$nomcamp]['type'] == $type){
         $nomFitxer = $_FILES[$nomcamp]['name'];
         if (move_uploaded_file($_FILES['foto']['tmp_name'],"$directori/".$nomFitxer )){
@@ -56,14 +56,14 @@ function saveFile($nomcamp,$type,$directori,&$errors){
         throw new \BatoiPOP\Exceptions\isNotAnImageFile($nomcamp);
     }
 }
-function nameLenght($nomCamp, &$errors){
+function nameLenght($nomCamp){
     if (strlen($_POST[$nomCamp]) >= 10 && strlen($_POST[$nomCamp]) <= 30){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
         throw new \BatoiPOP\Exceptions\NoFitField("El $nomCamp te que ser entre 10 i 30");
     }
 }
-function contrasenyaSegura($nomCamp, &$errors){
+function contrasenyaSegura($nomCamp){
     if (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/',$_POST[$nomCamp])){
         return trim(htmlspecialchars($_POST[$nomCamp]));
     }else{
@@ -71,7 +71,7 @@ function contrasenyaSegura($nomCamp, &$errors){
     }
 }
 
-function compararContrseñas($nomCamp1, $nomCamp2, &$errors){
+function compararContrseñas($nomCamp1, $nomCamp2){
     if ($_POST[$nomCamp1] !== $_POST[$nomCamp2]){
         throw new \BatoiPOP\Exceptions\passwordIsNotSame('');
     }

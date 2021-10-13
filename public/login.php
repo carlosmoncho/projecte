@@ -5,12 +5,12 @@ $errors = [];
 $paginaView = 'login';
 if (isPost() && cfsr()){
     try {
-        $usuari =  isRequired('usuarioLogin', $errors);
+        $usuari =  isRequired('usuarioLogin');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $contrasenya = isRequired('contraseñaLogin',$errors);
+        $contrasenya = isRequired('contraseñaLogin');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }

@@ -12,30 +12,30 @@ foreach ($categories as $categoria){
 }
 if (isPost() && cfsr()){
     try {
-        $nom = isRequired('nom',$errors);
-        $nom = nameLenght('nom',$errors);
+        $nom = isRequired('nom');
+        $nom = nameLenght('nom');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }catch (\BatoiPOP\Exceptions\NoFitField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $preuOriginal = isRequired('preuOriginal',$errors);
-        $preuOriginal = isNumeric('preuOriginal',$errors);
+        $preuOriginal = isRequired('preuOriginal');
+        $preuOriginal = isNumeric('preuOriginal');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }catch (\BatoiPOP\Exceptions\NoNumericField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $preuDescompte = isNumeric('preuDescompte',$errors);
+        $preuDescompte = isNumeric('preuDescompte');
     }catch (\BatoiPOP\Exceptions\NoNumericField $e){
 
         $errors[$e->getField()] = $e->getMessage();
     }
     try {
-        $estrelles = isNumeric('stars',$errors);
-        $estrelles = filtroStars('stars',$errors);
+        $estrelles = isNumeric('stars');
+        $estrelles = filtroStars('stars');
     }catch (\BatoiPOP\Exceptions\NoNumericField $e){
         $errors[$e->getField()] = $e->getMessage();
     }catch (\BatoiPOP\Exceptions\NoFitField $e){
@@ -43,7 +43,7 @@ if (isPost() && cfsr()){
     }
     $categoria = $_POST['categories'];
     try {
-        $fitxer = saveFile('foto','image/png','img',$errors);
+        $fitxer = saveFile('foto','image/png','img');
     }catch (\BatoiPOP\Exceptions\isNotAnImageFile $e){
         $errors[$e->getField()] = $e->getMessage();
     }
