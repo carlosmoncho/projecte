@@ -4,12 +4,9 @@ require_once($route_config.'menu.php');
 require_once($route_config.'categories.php');
 use BatoiPOP\Category;
 $errors = [];
-$categoriesObjects = [];
+$categoriesObjects = categoriesArray($categories);
 $paginaView = 'newProduct';
-foreach ($categories as $categoria){
-    $category = new Category($categoria['id'],$categoria['name']);
-    array_push($categoriesObjects,$category);
-}
+
 if (isPost() && cfsr()){
     try {
         $nom = isRequired('nom');
@@ -55,4 +52,13 @@ if (isPost() && cfsr()){
     }
 }else{
     loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
+}
+
+function categoriesArray($categories){
+    $categoriesObjects = [];
+    foreach ($categories as $categoria){
+        $category = new Category($categoria['id'],$categoria['name']);
+        array_push($categoriesObjects,$category);
+    }
+    return $categoriesObjects;
 }
