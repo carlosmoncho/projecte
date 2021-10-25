@@ -49,6 +49,7 @@ if (isPost() && cfsr()){
     if (!count($errors)){
         $paginaView = 'section';
         $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img);
+        $query->insert('productes',$camps);
         header('location:/load.php');
     }else{
         loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
