@@ -26,16 +26,19 @@
             <td>
                 <form method="POST" class="d-flex" action="/deleteProduct.php"" >
                 <button class="btn btn-dark" type="submit" name="eliminar" value="<?= $producto->id?>">
+                    <i class="bi bi-trash"></i>
                     eliminar
                 </button>
                 </form>
                 <form method="POST" class="d-flex" action="/updateProduct.php"" >
                 <button class="btn btn-dark" type="submit" name="update" value="<?= $producto->id?>">
+                    <i class="bi bi-pen"></i>
                     update
                 </button>
                 </form>
                 <form method="POST" class="d-flex" action="/showProducte.php"" >
                 <button class="btn btn-dark" type="submit" name="show" value="<?= $producto->id?>">
+                    <i class="bi bi-info"></i>
                     Datos Producto
                 </button>
                 </form>
@@ -44,8 +47,9 @@
     <?php }?>
     </tbody>
 </table>
-<br><form class="d-flex" action="/newProduct.php"" >
+<form class="d-flex" action="/newProduct.php"" >
 <button class="btn btn-dark" type="submit" >
+    <i class="bi bi-pen"></i>
     Nuevo producto
 </button>
-</form>
+</form><br>
