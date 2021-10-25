@@ -1,10 +1,8 @@
 <?php
 require_once ("../kernel.php");
 require_once($route_config.'menu.php');
-require_once($route_config.'categories.php');
 use BatoiPOP\Category;
 $errors = [];
-$categoriesObjects = categoriesArray($categories);
 $paginaView = 'updateProduct';
 
 if (isPost() && cfsr() && empty($_POST['update'])){
@@ -39,7 +37,6 @@ if (isPost() && cfsr() && empty($_POST['update'])){
     }catch (\BatoiPOP\Exceptions\NoFitField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
-    $categoria = $_POST['categories'];
     $sale = $_POST['sale'];
     try {
         $img = saveFile('foto','image/png','img');
@@ -51,11 +48,11 @@ if (isPost() && cfsr() && empty($_POST['update'])){
         $query->updateProduct('productes',$_POST['id'],$camps);
         header('location:/load.php');
     }else{
-        loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
+        loadView('index',compact('menu','errors', 'paginaView'));
     }
 }else{
     $product = $query->findById('productes',$_POST['update']);
-    loadView('index',compact('menu','errors', 'paginaView','categoriesObjects','product'));
+    loadView('index',compact('menu','errors', 'paginaView','product'));
 }
 
 function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img){
