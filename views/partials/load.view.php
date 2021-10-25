@@ -44,8 +44,8 @@
     <?php }?>
     </tbody>
 </table>
-<form class="d-flex" action="/newProduct.php"" >
-    <button class="btn btn-dark" type="submit" >
-        Nuevo producto
-    </button>
-</form><br>
+<br><form class="d-flex" action="/newProduct.php"" >
+<button class="btn btn-dark" type="submit" >
+    Nuevo producto
+</button>
+</form>

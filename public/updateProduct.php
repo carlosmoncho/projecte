@@ -49,9 +49,7 @@ if (isPost() && cfsr() && empty($_POST['update'])){
     if (!count($errors)){
         $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img);
         $query->updateProduct('productes',$_POST['id'],$camps);
-        $paginaView = 'section';
-        $productos = $query->selectAllLimit('productes',8);
-        loadView('index',compact('menu','paginaView','productos'));
+        header('location:/load.php');
     }else{
         loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
     }

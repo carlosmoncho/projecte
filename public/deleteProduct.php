@@ -5,4 +5,4 @@ require_once($route_config.'categories.php');
 $query->deleteProduct('productes', $_POST['eliminar'] );
 $paginaView = 'load';
 $productos = $query->selectAll('productes');
-loadView('index',compact('menu','paginaView','productos'));
+header('location:/load.php');
