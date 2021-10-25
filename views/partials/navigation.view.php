@@ -16,8 +16,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $nameLink ?></a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <?php foreach ($link as $subName => $subLink): ?>
-                                    <li><a class="dropdown-item" href="<?= $subLink ?>"><?= $subName ?></a></li>
+                                <?php foreach ($link as $subName => $subLink):?>
+                                    <li><a class="dropdown-item" href="<?= $subLink ?>?nombre=<?=$subName?>" ><?= $subName ?></a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>

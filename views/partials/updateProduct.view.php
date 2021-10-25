@@ -5,28 +5,33 @@
             <p><?=$error?></p>
         <?php endforeach;?>
     <?php }?>
-    <form method="POST" action="newProduct.php" enctype="multipart/form-data">
+    <form method="POST" action="updateProduct.php" enctype="multipart/form-data">
         <div class="form-group">
             <label for="inputnom">Nom:</label>
-            <input name="nom" type="text" class="form-control" id="inputnom" aria-describedby="inputnom" placeholder="Nom" >
+            <input name="nom" type="text" class="form-control" id="inputnom" aria-describedby="inputnom" placeholder="Nom" value="<?= $product->name ?>"  >
         </div>
         <div class="form-group">
             <label for="inputPreuOriginal">Preu Original:</label>
-            <input name="preuOriginal" type="text" class="form-control" id="inputPreuOriginal" aria-describedby="inputPreuOriginal" placeholder="Preu Original" >
+            <input name="preuOriginal" type="text" class="form-control" id="inputPreuOriginal" aria-describedby="inputPreuOriginal" placeholder="Preu Original" value="<?=$product->original_price?>" >
         </div>
         <div class="form-group">
             <label for="inputPreuDescompte">Preu Descompte:</label>
-            <input name="preuDescompte" type="text" class="form-control" id="inputPreuDescompte" aria-describedby="inputPreuDescompte" placeholder="Preu Descompte" >
+            <input name="preuDescompte" type="text" class="form-control" id="inputPreuDescompte" aria-describedby="inputPreuDescompte" placeholder="Preu Descompte" value="<?=$product->discount_price?>">
         </div>
         <div class="form-group">
             <label for="inputStars">Valoracio:</label>
-            <input name="stars" type="text" class="form-control" id="inputStars" aria-describedby="inputStars" placeholder="Estrelles" >
+            <input name="stars" type="text" class="form-control" id="inputStars" aria-describedby="inputStars" placeholder="Estrelles" value="<?=$product->stars?>" >
         </div>
         <div class="form-group">
             <label for="innputSale">Sale: </label>
             <select id="innputSale" class="form-control" name="sale">
-                <option value="1">True</option>
-                <option value="0">False</option>
+                <?php if ($product->sale == 1){?>
+                    <option value="1">True</option>
+                    <option value="0">False</option>
+                <?php }else{?>
+                    <option value="0">False</option>
+                    <option value="1">True</option>
+                <?php }?>
             </select>
         </div>
         <div class="form-group">
@@ -39,9 +44,9 @@
         </div>
         <br>
         <div class="custom-file">
-            <input type="file" name="foto" id="foto">
+            <input type="file" name="foto" id="foto" value="<?= $product->img ?>">
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" name="id" value="<?= $product->id?>">Submit</button>
     </form>
 </div>

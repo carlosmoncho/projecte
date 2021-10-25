@@ -5,7 +5,10 @@ require_once($route_config.'menu.php');
 use BatoiPOP\Producte;
 $productosObject = productsArray($products);
 $paginaView = 'section';
-loadView('index',compact('menu','products','paginaView','productosObject'));
+$productos = $query->selectAllLimit('productes',8);
+loadView('index',compact('menu','paginaView','productos'));
+
+
 
 function productsArray($products){
     $productosObject =[];

@@ -47,13 +47,15 @@ function filtroStars($nomCamp){
 }
 
 function saveFile($nomcamp,$type,$directori){
-    if ($_FILES[$nomcamp]['type'] == $type){
-        $nomFitxer = $_FILES[$nomcamp]['name'];
-        if (move_uploaded_file($_FILES['foto']['tmp_name'],"$directori/".$nomFitxer )){
-            return $nomFitxer;
+    if (!$_FILES[$nomcamp]['name'] == null){
+        if ($_FILES[$nomcamp]['type'] == $type){
+            $nomFitxer = $_FILES[$nomcamp]['name'];
+            if (move_uploaded_file($_FILES['foto']['tmp_name'],"$directori/".$nomFitxer )){
+                return $nomFitxer;
+            }
+        }else{
+            throw new \BatoiPOP\Exceptions\isNotAnImageFile($nomcamp);
         }
-    }else{
-        throw new \BatoiPOP\Exceptions\isNotAnImageFile($nomcamp);
     }
 }
 function nameLenght($nomCamp){

@@ -2,6 +2,7 @@
 // load filp/whoops
 
     require(dirname(__FILE__) . "/vendor/autoload.php");
+    $query = require_once('bootstrap.php');
 
     use Whoops\Run;
     use Whoops\Handler\PrettyPageHandler;

@@ -5,9 +5,9 @@ require_once($route_config.'categories.php');
 use BatoiPOP\Category;
 $errors = [];
 $categoriesObjects = categoriesArray($categories);
-$paginaView = 'newProduct';
+$paginaView = 'updateProduct';
 
-if (isPost() && cfsr()){
+if (isPost() && cfsr() && empty($_POST['update'])){
     try {
         $name = isRequired('nom');
         $name = nameLenght('nom');
@@ -47,18 +47,41 @@ if (isPost() && cfsr()){
         $errors[$e->getField()] = $e->getMessage();
     }
     if (!count($errors)){
-        $paginaView = 'section';
         $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img);
-        $query->insert('productes',$camps);
+        $query->updateProduct('productes',$_POST['id'],$camps);
+        $paginaView = 'section';
         $productos = $query->selectAllLimit('productes',8);
         loadView('index',compact('menu','paginaView','productos'));
     }else{
         loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
     }
 }else{
-    loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
+    $product = $query->findById('productes',$_POST['update']);
+    loadView('index',compact('menu','errors', 'paginaView','categoriesObjects','product'));
 }
 
+function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img){
+    if (empty($discount_price) && empty($img)){
+        return  createUpdate(compact('name', 'original_price', 'stars','sale'));
+    }else if(empty($discount_price)){
+        return createUpdate(compact('name', 'original_price', 'stars','sale', 'img'));
+    }else if(empty($img)){
+        return createUpdate(compact('name', 'original_price', 'discount_price', 'stars','sale'));
+    }else{
+        return createUpdate(compact('name', 'original_price', 'discount_price', 'stars','sale', 'img'));
+    }
+}
+function createUpdate($camps){
+    $string='';
+    foreach ($camps as $key => $camp){
+        if ($camp === end($camps)){
+            $string .= "`$key` = '$camp'";
+        }else {
+            $string .= "`$key` = '$camp', ";
+        }
+    }
+    return $string;
+}
 function categoriesArray($categories){
     $categoriesObjects = [];
     foreach ($categories as $categoria){
@@ -66,16 +89,4 @@ function categoriesArray($categories){
         array_push($categoriesObjects,$category);
     }
     return $categoriesObjects;
-}
-
-function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img){
-    if (empty($discount_price) && empty($img)){
-        return compact('name', 'original_price', 'stars','sale');
-    }else if(empty($discount_price)){
-        return compact('name', 'original_price', 'stars','sale', 'img');
-    }else if(empty($img)){
-        return compact('name', 'original_price', 'discount_price', 'stars','sale');
-    }else{
-        return compact('name', 'original_price', 'discount_price', 'stars','sale', 'img');
-    }
 }
