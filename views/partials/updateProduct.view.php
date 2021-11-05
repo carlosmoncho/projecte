@@ -34,6 +34,15 @@
                 <?php }?>
             </select>
         </div>
+        <div class="form-group">
+            <label for="innputCategories">Categories: </label>
+            <select id="innputCategories" class="form-control" name="categories">
+                <option value="<?=$product->category?>"><?=$categories[$product->category-1]->name?></option>
+                <?php foreach ($categories as $categoria){?>
+                    <option value="<?=$categoria->id?>"><?=$categoria->name?></option>
+                <?php }?>
+            </select>
+        </div>
         <br>
         <div class="custom-file">
             <input type="file" name="foto" id="foto" value="<?= $product->img ?>">

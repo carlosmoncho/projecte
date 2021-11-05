@@ -5,7 +5,7 @@ $errors = [];
 $paginaView = 'registre';
 if (isPost() && cfsr()){
     try {
-        $usuari =  isRequired('nombreUsuario');
+        $name =  isRequired('nombreUsuario');
     }catch (\BatoiPOP\Exceptions\RequiredField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
@@ -33,11 +33,9 @@ if (isPost() && cfsr()){
         $errors[$e->getField()] = $e->getMessage();
     }
     if (!count($errors)){
-        $paginaView = 'resultadoRegister';
-        loadView('index',compact('menu','usuari','email','contrasenya1','contrasenya2','paginaView'));
-    }else{
-        loadView('index',compact('menu', 'errors','paginaView'));
+        $password = password_hash($contrasenya1,PASSWORD_DEFAULT);
+        $query->insert('users',compact('name','email','password'));
+        header('location:/login.php');
     }
-}else{
-    loadView('index',compact('menu','errors', 'paginaView'));
 }
+loadView('index',compact('menu','errors', 'paginaView'));

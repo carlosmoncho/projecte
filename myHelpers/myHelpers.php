@@ -11,6 +11,10 @@ function isPost(){
     return ($_SERVER["REQUEST_METHOD"] === "POST");
 }
 
+function isGet(){
+    return ($_SERVER["REQUEST_METHOD"] === "GET");
+}
+
 function loadView($vista,$params){
     extract($params);
     include($_SERVER['DOCUMENT_ROOT'].'/../views/'.$vista.'.view.php') ;
@@ -79,3 +83,21 @@ function compararContrseñas($nomCamp1, $nomCamp2){
     }
 }
 
+function generar_token_seguro($longitud){
+    if ($longitud < 4){
+        $longitud = 4;
+    }
+    return bin2hex(random_bytes(($longitud - ($longitud % 2)) / 2));
+}
+
+function createUpdate($camps){
+    $string='';
+    foreach ($camps as $key => $camp){
+        if ($key === array_key_last($camps)){
+            $string .= "`$key` = '$camp'";
+        }else {
+            $string .= "`$key` = '$camp', ";
+        }
+    }
+    return $string;
+}

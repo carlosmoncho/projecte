@@ -4,7 +4,7 @@ require_once($route_config.'menu.php');
 require_once($route_config.'categories.php');
 use BatoiPOP\Category;
 $errors = [];
-$categoriesObjects = categoriesArray($categories);
+$categories = $query->selectAll('categories');
 $paginaView = 'newProduct';
 
 if (isPost() && cfsr()){
@@ -39,7 +39,7 @@ if (isPost() && cfsr()){
     }catch (\BatoiPOP\Exceptions\NoFitField $e){
         $errors[$e->getField()] = $e->getMessage();
     }
-    $categoria = $_POST['categories'];
+    $category = $_POST['categories'];
     $sale = $_POST['sale'];
     try {
         $img = saveFile('foto','image/png','img');
@@ -48,14 +48,14 @@ if (isPost() && cfsr()){
     }
     if (!count($errors)){
         $paginaView = 'section';
-        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img);
+        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img,$category);
         $query->insert('productes',$camps);
         header('location:/load.php');
     }else{
-        loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
+        loadView('index',compact('menu','errors', 'paginaView','categories'));
     }
 }else{
-    loadView('index',compact('menu','errors', 'paginaView','categoriesObjects'));
+    loadView('index',compact('menu','errors', 'paginaView','categories'));
 }
 
 function categoriesArray($categories){
@@ -67,14 +67,14 @@ function categoriesArray($categories){
     return $categoriesObjects;
 }
 
-function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img){
+function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img,$category){
     if (empty($discount_price) && empty($img)){
-        return compact('name', 'original_price', 'stars','sale');
+        return compact('name', 'original_price', 'stars','sale','category');
     }else if(empty($discount_price)){
-        return compact('name', 'original_price', 'stars','sale', 'img');
+        return compact('name', 'original_price', 'stars','sale', 'img','category');
     }else if(empty($img)){
-        return compact('name', 'original_price', 'discount_price', 'stars','sale');
+        return compact('name', 'original_price', 'discount_price', 'stars','sale','category');
     }else{
-        return compact('name', 'original_price', 'discount_price', 'stars','sale', 'img');
+        return compact('name', 'original_price', 'discount_price', 'stars','sale', 'img','category');
     }
 }

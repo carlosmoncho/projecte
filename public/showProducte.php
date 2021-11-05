@@ -1,7 +1,7 @@
 <?php
 require_once ("../kernel.php");
 require_once($route_config.'menu.php');
-require_once($route_config.'categories.php');
+$categories = $query->selectAll('categories');
 $product = $query->findById('productes',$_POST['show']);
 $paginaView = 'showProducte';
-loadView('index',compact('menu', 'product','paginaView'));
+loadView('index',compact('menu', 'product','paginaView','categories'));

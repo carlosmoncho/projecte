@@ -24,12 +24,24 @@
                     <?php endif ?>
                 <?php endforeach; ?>
             </ul>
-            <form class="d-flex" action="/login.php" >
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi bi-person"></i>
-                    Login
-                </button>
-            </form>
+            <?php if (!empty($user)){?>
+                <i class="bi bi-person"></i>
+                <?= $user->name?>
+                <p>&nbsp; &nbsp; &nbsp;</p>
+                <form class="d-flex" action="/logout.php" >
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi bi-person"></i>
+                        Logout
+                    </button>
+                </form>
+            <?php }else{?>
+                <form class="d-flex" action="/login.php" >
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi bi-person"></i>
+                        Login
+                    </button>
+                </form>
+            <?php }?>
         </div>
     </div>
 </nav>

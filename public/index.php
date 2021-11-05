@@ -1,11 +1,15 @@
 <?php
+session_start();
 require_once ('../kernel.php');
 require_once($route_config.'products.php');
 require_once($route_config.'menu.php');
 use BatoiPOP\Producte;
-$productosObject = productsArray($products);
 $paginaView = 'section';
 $productos = $query->selectAllLimit('productes',8);
+if (isset($_SESSION['user'])){
+    $user = unserialize($_SESSION['user']);
+    loadView('index',compact('menu','paginaView','productos','user'));
+}
 loadView('index',compact('menu','paginaView','productos'));
 
 

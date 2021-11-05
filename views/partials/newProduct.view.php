@@ -32,8 +32,8 @@
         <div class="form-group">
             <label for="innputCategories">Categories: </label>
             <select id="innputCategories" class="form-control" name="categories">
-                <?php foreach ($categoriesObjects as $categoria){?>
-                    <option value="<?=$categoria->getId()?>"><?=$categoria->getName()?></option>
+                <?php foreach ($categories as $categoria){?>
+                    <option value="<?=$categoria->id?>"><?=$categoria->name?></option>
                 <?php }?>
             </select>
         </div>

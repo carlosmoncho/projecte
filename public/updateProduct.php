@@ -4,7 +4,7 @@ require_once($route_config.'menu.php');
 use BatoiPOP\Category;
 $errors = [];
 $paginaView = 'updateProduct';
-
+$categories = $query->selectAll('categories');
 if (isPost() && cfsr() && empty($_POST['update'])){
     try {
         $name = isRequired('nom');
@@ -38,45 +38,36 @@ if (isPost() && cfsr() && empty($_POST['update'])){
         $errors[$e->getField()] = $e->getMessage();
     }
     $sale = $_POST['sale'];
+    $category = $_POST['categories'];
     try {
         $img = saveFile('foto','image/png','img');
     }catch (\BatoiPOP\Exceptions\isNotAnImageFile $e){
         $errors[$e->getField()] = $e->getMessage();
     }
     if (!count($errors)){
-        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img);
-        $query->updateProduct('productes',$_POST['id'],$camps);
+        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img,$category);
+        $query->update('productes',$_POST['id'],$camps);
         header('location:/load.php');
     }else{
-        loadView('index',compact('menu','errors', 'paginaView'));
+        loadView('index',compact('menu','errors', 'paginaView','categories'));
     }
 }else{
     $product = $query->findById('productes',$_POST['update']);
-    loadView('index',compact('menu','errors', 'paginaView','product'));
+    loadView('index',compact('menu','errors', 'paginaView','product','categories'));
 }
 
-function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img){
+function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img,$category){
     if (empty($discount_price) && empty($img)){
-        return  createUpdate(compact('name', 'original_price', 'stars','sale'));
+        return  createUpdate(compact('name', 'original_price', 'category','sale', 'stars'));
     }else if(empty($discount_price)){
-        return createUpdate(compact('name', 'original_price', 'stars','sale', 'img'));
+        return createUpdate(compact('name', 'original_price','category', 'sale', 'img', 'stars'));
     }else if(empty($img)){
-        return createUpdate(compact('name', 'original_price', 'discount_price', 'stars','sale'));
+        return createUpdate(compact('name', 'original_price', 'stars','sale','category', 'discount_price'));
     }else{
-        return createUpdate(compact('name', 'original_price', 'discount_price', 'stars','sale', 'img'));
+        return createUpdate(compact('name', 'original_price', 'stars','sale', 'img','category', 'discount_price'));
     }
 }
-function createUpdate($camps){
-    $string='';
-    foreach ($camps as $key => $camp){
-        if ($camp === end($camps)){
-            $string .= "`$key` = '$camp'";
-        }else {
-            $string .= "`$key` = '$camp', ";
-        }
-    }
-    return $string;
-}
+
 function categoriesArray($categories){
     $categoriesObjects = [];
     foreach ($categories as $categoria){

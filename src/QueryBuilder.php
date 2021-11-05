@@ -42,12 +42,18 @@ class QueryBuilder
         return $stpdo->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function findByEmail($table, $email){
+        $stpdo = $this->connexio->prepare("SELECT * FROM `$table` WHERE `email` = '$email'");
+        $stpdo->execute();
+        return $stpdo->fetch(\PDO::FETCH_OBJ);
+    }
+
     public function deleteProduct($table, $id){
         $stpdo = $this->connexio->prepare("DELETE FROM `$table` WHERE `id` = '$id'");
         $stpdo->execute();
     }
 
-    public function updateProduct($table, $id,$camps){
+    public function update($table, $id,$camps){
         $stpdo = $this->connexio->prepare(" UPDATE $table SET $camps WHERE `id` = '$id'");
         $stpdo->execute();
     }
@@ -56,5 +62,22 @@ class QueryBuilder
         $campsInsertar = implode("','", $camps);
         $stpdo = $this->connexio->prepare(" insert into $nomtaula (`$arrayKeySeparadoPorComas`) values ('$campsInsertar')");
         $stpdo->execute();
+    }
+    public function login($table,$email,$password){
+        $stpdo = $this->connexio->prepare("SELECT * FROM $table WHERE email = :email");
+        $stpdo->bindValue(":email",$email);
+        $stpdo->execute();
+        $user = $stpdo->fetch(\PDO::FETCH_OBJ);
+        if (empty($user)){
+            throw new \Exception('EL nom o la contraseña no son correctes');
+        }
+        if (password_verify($password,$user->password))return $user;
+        return null;
+    }
+    public function validationEmail($table,$email,$token){
+        $stpdo = $this->connexio->prepare("SELECT * FROM $table WHERE `email` = '$email' AND `token_recup` = '$token'");
+        $stpdo->execute();
+        return $stpdo->fetch(\PDO::FETCH_OBJ);
+
     }
 }

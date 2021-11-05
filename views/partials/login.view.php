@@ -15,6 +15,10 @@
             <input name="contraseñaLogin" type="text" class="form-control" id="inputContraseñaLogin" aria-describedby="inputContraseñaLogin" placeholder="Contrasenya"  >
         </div>
         <div class="form-group">
+            <label for="forgot">He oblidat la contrasenya:</label>
+            <input name="forgot" type="checkbox" id="forgot">
+        </div>
+        <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
