@@ -19,7 +19,7 @@ if (isPost() && cfsr()){
             }
             $token_recup = generar_token_seguro(60);
             $query->update('users',$user->id,createUpdate(compact('token_recup')));
-            $mail->setFrom('carlosmonchomolla@gmail.com','123456789.B');
+            $mail->setFrom('batoipop2021@gmail.com',$user->name);
 
             $mail->addAddress($user->email, $user->name);
 

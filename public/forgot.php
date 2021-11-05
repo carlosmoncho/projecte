@@ -39,7 +39,13 @@ if (isPost()){
         var_dump($contrasenyaNova);
         $query->update('users',$idUser->id,$contrasenyaNova);
         header('location:/login.php');
-    }else{
-        echo ('holaaaaaaaaaa');
+    }else {
+        echo 'Torna a demanar un cambi de contraseña';?><br>
+        <?php
+        if (!empty($errors)) {
+            foreach ($errors as $error):
+                echo $error;
+            endforeach;
+        }
     }
 }
