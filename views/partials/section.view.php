@@ -32,10 +32,18 @@
                             <?php }else{?>
                                 <span class="text-muted text-decoration-line-through"><?='$'.$producto->original_price?></span><?=' - $'.$producto->discount_price;?>
                             <?php } ?>
+
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <?php if ($producto->sale == 0){?>
+                        <form method="POST" class="d-flex" action="/newOffer.php"" >
+                        <button class="btn btn-dark" type="submit" name="offer" value="<?= $producto->id?>">
+                            Offer
+                        </button>
+                        </form>
+                        <?php } ?>
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Mostrar</a></div>
                     </div>
                 </div>

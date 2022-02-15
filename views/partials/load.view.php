@@ -11,7 +11,6 @@
                 <th scope="col">Discount price</th>
                 <th scope="col">Stars</th>
                 <th scope="col">Sale</th>
-                <th scope="col">Category</th>
                 <th scope="col">Botones</th>
             </tr>
             </thead>
@@ -28,7 +27,7 @@
                     <?php }else{?>
                         <td>False</td>
                     <?php }?>
-                    <td><?=$categories[$producto->category-1]->name?></td>
+
                     <td>
                         <form method="POST" class="d-flex" action="/deleteProduct.php"" >
                         <button class="btn btn-dark" type="submit" name="eliminar" value="<?= $producto->id?>">
@@ -42,7 +41,7 @@
                             update
                         </button>
                         </form>
-                        <form method="POST" class="d-flex" action="/showProducte.php"" >
+                        <form method="POST" class="d-flex" action="/showProducte.php" >
                         <button class="btn btn-dark" type="submit" name="show" value="<?= $producto->id?>">
                             <i class="bi bi-info"></i>
                             Datos Producto

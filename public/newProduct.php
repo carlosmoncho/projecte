@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ("../kernel.php");
 require_once($route_config.'menu.php');
 require_once($route_config.'categories.php');
@@ -6,8 +7,12 @@ use BatoiPOP\Category;
 $errors = [];
 $categories = $query->selectAll('categories');
 $paginaView = 'newProduct';
+if (isset($_SESSION['user'])){
+    $user = unserialize($_SESSION['user']);
+}
 
-if (isPost() && cfsr()){
+if (isPost() && cfsr() ){
+    $user = $user->id;
     try {
         $name = isRequired('nom');
         $name = nameLenght('nom');
@@ -48,11 +53,12 @@ if (isPost() && cfsr()){
     }
     if (!count($errors)){
         $paginaView = 'section';
-        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img,$category);
-        $query->insert('productes',$camps);
+        $camps = compactCamps($name,$original_price,$discount_price,$stars,$sale,$img,$category,$user);
+        $query->insert('ofertes',$camps);
         header('location:/load.php');
     }else{
         loadView('index',compact('menu','errors', 'paginaView','categories'));
+
     }
 }else{
     loadView('index',compact('menu','errors', 'paginaView','categories'));
@@ -67,14 +73,14 @@ function categoriesArray($categories){
     return $categoriesObjects;
 }
 
-function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img,$category){
+function compactCamps($name, $original_price, $discount_price, $stars,$sale, $img,$category, $user){
     if (empty($discount_price) && empty($img)){
-        return compact('name', 'original_price', 'stars','sale','category');
+        return compact('name', 'original_price', 'stars','sale','category','user');
     }else if(empty($discount_price)){
-        return compact('name', 'original_price', 'stars','sale', 'img','category');
+        return compact('name', 'original_price', 'stars','sale', 'img','category','user');
     }else if(empty($img)){
-        return compact('name', 'original_price', 'discount_price', 'stars','sale','category');
+        return compact('name', 'original_price', 'discount_price', 'stars','sale','category','user');
     }else{
-        return compact('name', 'original_price', 'discount_price', 'stars','sale', 'img','category');
+        return compact('name', 'original_price', 'discount_price', 'stars','sale', 'img','category','user');
     }
 }
